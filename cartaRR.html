@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mundo con lluvia de mensajes lindos</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #0b1026;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        /* Mundo giratorio */
+        .globe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 320px;
+            height: 320px;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/8/83/Equirectangular_projection_SW.jpg');
+            background-size: cover;
+            border-radius: 50%;
+            box-shadow: inset -20px -20px 50px rgba(0,0,0,0.5), 0 0 40px rgba(0, 140, 255, 0.6);
+            animation: rotateGlobe 18s linear infinite;
+        }
+
+        @keyframes rotateGlobe {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: -1000px 0;
+            }
+        }
+
+        /* Lluvia de mensajes */
+        .mensaje {
+            position: absolute;
+            top: -40px;
+            font-size: 18px;
+            padding: 6px 12px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 12px;
+            backdrop-filter: blur(3px);
+            white-space: nowrap;
+            animation: caer linear;
+            pointer-events: none;
+        }
+
+        @keyframes caer {
+            from {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateY(120vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="globe"></div>
+
+    <script>
+        const frases = [
+            "Eres importante 💖",
+            "Tu sonrisa ilumina todo ✨",
+            "Hoy es un buen día para brillar 🌟",
+            "Mereces cosas hermosas 💕",
+            "El mundo es mejor contigo 🫶",
+            "Tu corazón es magia ✨",
+            "Eres pura luz 🌙",
+            "Nunca olvides lo valiosa que eres 💗",
+            "Eres fuerte y capaz 💪💙",
+        ];
+
+        function lluviaMensajes() {
+            const mensaje = document.createElement("div");
+            mensaje.className = "mensaje";
+            mensaje.textContent = frases[Math.floor(Math.random() * frases.length)];
+
+            // posición aleatoria de caída
+            mensaje.style.left = Math.random() * 100 + "vw";
+
+            // duración aleatoria
+            const duracion = 4 + Math.random() * 4;
+            mensaje.style.animationDuration = duracion + "s";
+
+            document.body.appendChild(mensaje);
+
+            // eliminar cuando termine la animación
+            setTimeout(() => mensaje.remove(), duracion * 1000);
+        }
+
+        // crear lluvia cada 600 milisegundos
+        setInterval(lluviaMensajes, 600);
+    </script>
+
+</body>
+</html>
